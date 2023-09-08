@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost'; //127.0.0.1
-$database_name = 'mencoba_database';
+$database_name = 'msib5_try_database';
 $database_username = 'root';
 $database_password = '';
 
