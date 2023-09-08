@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 // Memanggil koneksi menuju database
 include_once("connection.php");
@@ -29,6 +29,7 @@ $result = mysqli_query($mysqli, 'SELECT * FROM karyawan');
     }
   </script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
+  <link href="https://cdn-icons-png.flaticon.com/512/666/666201.png" rel="icon">
   <title>MSIB 5 - Tugas Mencoba Database</title>
 </head>
 
@@ -62,19 +63,24 @@ $result = mysqli_query($mysqli, 'SELECT * FROM karyawan');
                 <th scope="col" class="p-4">Posisi</th>
                 <th scope="col" class="p-4">Gaji</th>
                 <th scope="col" class="p-4">Alamat</th>
+                <th scope="col" class="p-4">Email</th>
                 <th scope="col" class="p-4">Aksi</th>
               </tr>
             </thead>
             <tbody>
+              <?php
+              while($user_data = mysqli_fetch_array($result)) {
+              ?>
               <tr class="dark:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-700">
                 <th scope="row" class="px-4 py-3 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
                   <div class="flex items-center mr-3">
-                    Faris Faikar Razannafi
+                    <?php echo $user_data['nama']; ?>
                   </div>
                 </th>
-                <td class="px-4 py-3">Tech Lead</td>
-                <td class="px-4 py-3">$200,000</td>
-                <td class="px-4 py-3">Jl. Eceng No. 15, Bandung</td>
+                <td class="px-4 py-3"><?php echo $user_data['posisi']; ?></td>
+                <td class="px-4 py-3">Rp <?php echo number_format($user_data['gaji'], 0, ',', '.'); ?></td>
+                <td class="px-4 py-3"><?php echo $user_data['alamat']; ?></td>
+                <td class="px-4 py-3"><?php echo $user_data['email']; ?></td>
                 <td class="px-4 py-3 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
                   <div class="flex items-center space-x-4">
                     <button type="button" data-drawer-target="drawer-update-product" data-drawer-show="drawer-update-product" aria-controls="drawer-update-product" class="py-2 px-3 flex items-center text-sm font-medium text-center text-zinc-900 dark:text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
@@ -93,6 +99,9 @@ $result = mysqli_query($mysqli, 'SELECT * FROM karyawan');
                   </div>
                 </td>
               </tr>
+              <?php
+              }
+              ?>
             </tbody>
           </table>
         </div>
@@ -116,13 +125,13 @@ $result = mysqli_query($mysqli, 'SELECT * FROM karyawan');
           </button>
         </div>
         <!-- Modal body -->
-        <form action="#">
+        <form action="#" method="post">
           <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
               <label for="nama" class="block mb-2 text-sm font-medium text-zinc-900 dark:text-white">Nama</label>
               <input type="text" name="nama" id="nama" class="bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Masukkan nama karyawan" required="">
             </div>
-            <div><label for="posisi" class="block mb-2 text-sm font-medium text-zinc-900 dark:text-white">Posisi</label><select id="posisi" class="bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+            <div><label for="posisi" class="block mb-2 text-sm font-medium text-zinc-900 dark:text-white">Posisi</label><select id="posisi" name="posisi" class="bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                 <option selected="">Pilih posisi</option>
                 <option value="Tech Lead">Tech Lead</option>
                 <option value="Frontend Developer">Frontend Developer</option>
@@ -146,10 +155,13 @@ $result = mysqli_query($mysqli, 'SELECT * FROM karyawan');
               <label for="gaji" class="block mb-2 text-sm font-medium text-zinc-900 dark:text-white">Gaji</label>
               <input type="number" name="gaji" id="gaji" class="bg-zinc-50 border border-zinc-300 text-zinc-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Rp 10.000.000" required="">
             </div>
-            <div class="sm:col-span-2"><label for="alamat" class="block mb-2 text-sm font-medium text-zinc-900 dark:text-white">Alamat</label><textarea id="alamat" rows="4" class="block p-2.5 w-full text-sm text-zinc-900 bg-zinc-50 rounded-lg border border-zinc-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Masukkan alamat karyawan"></textarea></div>
+            <div class="sm:col-span-2">
+              <label for="alamat" class="block mb-2 text-sm font-medium text-zinc-900 dark:text-white">Alamat</label>
+              <textarea id="alamat" rows="4" name="alamat" class="block p-2.5 w-full text-sm text-zinc-900 bg-zinc-50 rounded-lg border border-zinc-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Masukkan alamat karyawan"></textarea>
+            </div>
           </div>
           <div class="items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-            <button type="submit" class="w-full sm:w-auto justify-center text-zinc-900 dark:text-white inline-flex bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Tambah Karyawan</button>
+            <button type="submit" name="submit-create" class="w-full sm:w-auto justify-center text-zinc-900 dark:text-white inline-flex bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Tambah Karyawan</button>
             <button data-modal-toggle="createProductModal" type="button" class="w-full justify-center sm:w-auto text-zinc-500 inline-flex items-center bg-white hover:bg-zinc-100 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg border border-zinc-200 text-sm font-medium px-5 py-2.5 hover:text-zinc-900 focus:z-10 dark:bg-zinc-700 dark:text-zinc-300 dark:border-zinc-500 dark:hover:text-white dark:hover:bg-zinc-600 dark:focus:ring-zinc-600">
               <svg class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -246,6 +258,31 @@ $result = mysqli_query($mysqli, 'SELECT * FROM karyawan');
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+
+  <!-- Handle permintaan POST dari form diatas -->
+  <?php
+  if (isset($_POST['submit-create'])) {
+    $nama = $_POST['nama'];
+    $posisi = $_POST['posisi'];
+    $gaji = $_POST['gaji'];
+    $email = $_POST['email'];
+    $alamat = $_POST['alamat'];
+
+    // Memanggil koneksi menuju database
+    include_once("connection.php");
+
+    // Query untuk insert data ke database
+    $result = mysqli_query(
+      $mysqli,
+      "INSERT INTO karyawan (nama, email, posisi, alamat, gaji) VALUES ('$nama', '$email', '$posisi', '$alamat', '$gaji')"
+    );
+
+    // Refresh halaman dan tampilkan data
+    header("Location: {$_SERVER['REQUEST_URI']}");
+    exit();
+  }
+  ?>
+
 </body>
 
 </html>
