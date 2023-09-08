@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Normal Table</title>
+</head>
+
+<body class="bg-zinc-900 p-2">
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-zinc-500 dark:text-zinc-400">
+      <caption class="p-5 text-lg font-semibold text-left text-zinc-900 bg-white dark:text-white dark:bg-zinc-800">
+        Tabel Karyawan
+        <p class="mt-1 text-sm font-normal text-zinc-500 dark:text-zinc-400">
+          Berikut merupakan data karyawan yang bisa
+          diedit, ditambah, dan dihapus secara otomatis ke dan data akan diperbarui di database secara otomatis.
+        </p>
+      </caption>
+      <thead class="text-xs text-zinc-700 uppercase bg-zinc-50 dark:bg-zinc-700 dark:text-zinc-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            Nama Karyawan
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Posisi
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Gaji
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Alamat
+          </th>
+          <th scope="col" class="px-6 py-3">
+            <button type="button" class="mt-2 text-zinc-500 bg-white border border-zinc-300 focus:outline-none hover:bg-zinc-100 focus:ring-4 focus:ring-zinc-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-600 dark:hover:bg-zinc-700 dark:hover:border-zinc-600 dark:focus:ring-zinc-700">Add</button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
+          <th scope="row" class="px-6 py-4 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
+            Faris Faikar Razannafi
+          </th>
+          <td class="px-6 py-4">
+            Tech Lead
+          </td>
+          <td class="px-6 py-4">
+            $200,000
+          </td>
+          <td class="px-6 py-4">
+            Jl. Eceng No. 15, Bandung
+          </td>
+          <td class="px-6 py-4 text-center sm:flex justify-center gap-4">
+            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+            <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+          </td>
+        </tr>
+        <tr class="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
+          <th scope="row" class="px-6 py-4 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
+            Saeful Dama Maulidin
+          </th>
+          <td class="px-6 py-4">
+            Frontend Developer
+          </td>
+          <td class="px-6 py-4">
+            $150,000
+          </td>
+          <td class="px-6 py-4">
+            Gg Cokro II, Semarang
+          </td>
+          <td class="px-6 py-4 text-center sm:flex justify-center gap-4">
+            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+            <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+          </td>
+        </tr>
+        <tr class="bg-white dark:bg-zinc-800">
+          <th scope="row" class="px-6 py-4 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
+            Veda Bezaleel
+          </th>
+          <td class="px-6 py-4">
+            Backend Engineer
+          </td>
+          <td class="px-6 py-4">
+            $180,000
+          </td>
+          <td class="px-6 py-4">
+            Jl. Kalimasada No. 23, Surabaya
+          </td>
+          <td class="px-6 py-4 text-center sm:flex justify-center gap-4">
+            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+            <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
