@@ -63,7 +63,7 @@ $result = mysqli_query($mysqli, 'SELECT * FROM employees');
                 <th scope="col" class="p-4">Aksi</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="border-b dark:border-zinc-700">
               <?php
               // Add an empty row if there are no records
               if (mysqli_num_rows($result) === 0) {
@@ -87,7 +87,8 @@ $result = mysqli_query($mysqli, 'SELECT * FROM employees');
                       <?= $user_data['position'] ?>
                     </td>
                     <td class="px-4 py-3">
-                      $<?= number_format($user_data['salary'], 0, ',', '.') ?>
+                      $
+                      <?= number_format($user_data['salary'], 0, ',', '.') ?>
                     </td>
                     <td class="px-4 py-3">
                       <?= $user_data['address'] ?>
@@ -143,11 +144,142 @@ $result = mysqli_query($mysqli, 'SELECT * FROM employees');
             </tbody>
           </table>
         </div>
+        <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
+          <span class="text-sm font-normal text-zinc-500 dark:text-zinc-400">
+            Showing
+            <span class="font-semibold text-zinc-900 dark:text-white">1-10</span>
+            of
+            <span class="font-semibold text-zinc-900 dark:text-white">1000</span>
+          </span>
+          <ul class="inline-flex items-stretch -space-x-px">
+            <li>
+              <a href="#" class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-zinc-500 bg-white rounded-l-lg border border-zinc-300 hover:bg-zinc-100 hover:text-zinc-700 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white">
+                <span class="sr-only">Previous</span>
+                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-zinc-500 bg-white border border-zinc-300 hover:bg-zinc-100 hover:text-zinc-700 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white">1</a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-zinc-500 bg-white border border-zinc-300 hover:bg-zinc-100 hover:text-zinc-700 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white">2</a>
+            </li>
+            <li>
+              <a href="#" aria-current="page" class="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-zinc-700 dark:bg-zinc-700 dark:text-white">3</a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-zinc-500 bg-white border border-zinc-300 hover:bg-zinc-100 hover:text-zinc-700 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white">...</a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-zinc-500 bg-white border border-zinc-300 hover:bg-zinc-100 hover:text-zinc-700 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white">100</a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-zinc-500 bg-white rounded-r-lg border border-zinc-300 hover:bg-zinc-100 hover:text-zinc-700 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white">
+                <span class="sr-only">Next</span>
+                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </section>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const itemsPerPage = 10; // Number of items per page
+      const totalItems = <?= mysqli_num_rows($result) ?>; // Total number of items from PHP
+
+      let currentPage = 1;
+
+      function updatePagination() {
+        const startIndex = (currentPage - 1) * itemsPerPage + 1;
+        const endIndex = Math.min(currentPage * itemsPerPage, totalItems);
+
+        document.getElementById("start-index").textContent = startIndex;
+        document.getElementById("end-index").textContent = endIndex;
+
+        const paginationList = document.getElementById("pagination-list");
+        paginationList.innerHTML = "";
+
+        // Calculate the number of pages needed
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        // Create Previous button
+        const previousButton = document.createElement("li");
+        previousButton.innerHTML = `
+            <a href="#" class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-zinc-500 bg-white rounded-l-lg border border-zinc-300 hover:bg-zinc-100 hover:text-zinc-700 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white">
+              <span class="sr-only">Previous</span>
+              <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          `;
+        previousButton.addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            updatePagination();
+          }
+        });
+
+        // Create Next button
+        const nextButton = document.createElement("li");
+        nextButton.innerHTML = `
+      <a href="#" class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-zinc-500 bg-white rounded-r-lg border border-zinc-300 hover:bg-zinc-100 hover:text-zinc-700 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white">
+        <span class="sr-only">Next</span>
+        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg>
+      </a>
+    `;
+        nextButton.addEventListener("click", () => {
+          if (currentPage < totalPages) {
+            currentPage++;
+            updatePagination();
+          }
+        });
+
+        paginationList.appendChild(previousButton);
+
+        // Create page number buttons
+        for (let i = 1; i <= totalPages; i++) {
+          const pageButton = document.createElement("li");
+          pageButton.innerHTML = `
+        <a href="#" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-zinc-500 bg-white border border-zinc-300 hover:bg-zinc-100 hover:text-zinc-700 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white">${i}</a>
+      `;
+          pageButton.addEventListener("click", () => {
+            currentPage = i;
+            updatePagination();
+          });
+          paginationList.appendChild(pageButton);
+
+          // Highlight the current page
+          if (currentPage === i) {
+            pageButton.querySelector("a").classList.add("bg-primary-50", "border-primary-300", "text-primary-600");
+          }
+        }
+
+        paginationList.appendChild(nextButton);
+
+        // Disable Previous button if on the first page
+        if (currentPage === 1) {
+          previousButton.classList.add("pointer-events-none", "opacity-50");
+        }
+
+        // Disable Next button if on the last page
+        if (currentPage === totalPages) {
+          nextButton.classList.add("pointer-events-none", "opacity-50");
+        }
+      }
+
+      updatePagination();
+    });
+  </script>
 </body>
 
 </html>
