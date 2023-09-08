@@ -62,7 +62,7 @@ while ($user_data = mysqli_fetch_array($query)) {
     <div class="relative w-full sm:max-w-xl p-4 bg-white sm:rounded-lg shadow dark:bg-zinc-800 sm:p-5">
       <!-- Card header -->
       <div class="flex justify-center items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-zinc-600">
-        <h4 class="text-center text-md font-semibold text-zinc-500 uppercase dark:text-zinc-400">Add Employee</h4>
+        <h4 class="text-center text-md font-semibold text-zinc-500 uppercase dark:text-zinc-400">Edit Employee</h4>
       </div>
       <!-- Card body -->
       <form action="#" method="post">
